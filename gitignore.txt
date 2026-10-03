@@ -1,0 +1,14 @@
+# Assembled prompts produced by scripts/assemble-prompt.sh
+assembled-*.md
+
+# Audit outputs (reports are generated per engagement, keep them out of the kit)
+reports/
+*-findings.json
+*-sbom-notes.md
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/

@@ -105,5 +105,3 @@ For a fast look, skip assembly and use `prompts/quick-scan-lite.md` directly.
 ## License & responsibility
 Use only against systems you are authorized to test. You are responsible for staying
 within scope and applicable law.
-EOF
-echo done
