@@ -1,0 +1,48 @@
+# Severity model — CVSS 4.0 base score combined with a business-impact overlay.
+# Final severity = the HIGHER of the CVSS band and the business-damage band.
+
+cvss_bands:
+  critical: [9.0, 10.0]
+  high:     [7.0, 8.9]
+  medium:   [4.0, 6.9]
+  low:      [0.1, 3.9]
+  none:     [0.0, 0.0]
+
+business_damage_bands:
+  catastrophic:   # -> Critical
+    financial_exposure: "existential"
+    examples:
+      - "Full database exfiltration of crown-jewel data"
+      - "Mass account takeover"
+      - "RCE on a core/production service"
+      - "Payment theft or fraud at scale"
+      - "Regulator-reportable breach (GDPR / CERT-In / HIPAA)"
+  large:          # -> High
+    financial_exposure: ">= $1M"
+    examples:
+      - "Cross-tenant data breach (B2B SaaS)"
+      - "Privilege escalation to admin or billing"
+      - "Bulk PII enumeration/export"
+  medium:         # -> Medium
+    financial_exposure: "$10K - $1M"
+    examples:
+      - "Scoped data exposure"
+      - "Meaningful business-logic abuse (coupon/quota)"
+  low:            # -> Low / Informational
+    financial_exposure: "< $10K"
+    examples:
+      - "Hardening gaps, defense-in-depth, theoretical issues"
+
+overlay_rule: "final_severity = max(cvss_band, business_damage_band)"
+
+confidence_levels:
+  - Confirmed     # reproduced with observed evidence
+  - High          # strong static proof, reproduction impractical in sandbox
+  - Medium        # plausible path, some assumptions unverified
+  - Speculative   # routed to Triage Judgement section, never Critical/High
+
+regulatory_fine_reference:
+  gdpr: "up to 4% of global annual revenue or EUR 20M"
+  pci_dss: "$5,000 - $100,000 per month"
+  hipaa: "up to $1.9M per violation category per year"
+  cert_in: "mandatory incident reporting within 6 hours (India)"

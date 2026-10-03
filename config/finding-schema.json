@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AuditFinding",
+  "type": "object",
+  "required": ["id", "title", "severity", "confidence", "cwe_primary", "scope", "location", "business_impact"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^F-[0-9]{2,}$" },
+    "title": { "type": "string" },
+    "severity": { "enum": ["Critical", "High", "Medium", "Low", "Informational"] },
+    "confidence": { "enum": ["Confirmed", "High", "Medium", "Speculative"] },
+    "cvss4_vector": { "type": "string" },
+    "cvss4_score": { "type": "number", "minimum": 0, "maximum": 10 },
+    "cwe_primary": { "type": "string", "pattern": "^CWE-[0-9]+$" },
+    "cwe_secondary": { "type": "array", "items": { "type": "string" } },
+    "owasp_top10": { "type": "string" },
+    "asvs": { "type": "string" },
+    "mitre_attack": { "type": "array", "items": { "type": "string" } },
+    "scope": { "enum": ["in-scope", "borderline", "out-of-scope"] },
+    "scope_clause": { "type": "string" },
+    "affected_versions": { "type": "string" },
+    "last_unaffected": { "type": "string" },
+    "location": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["file"],
+        "properties": {
+          "file": { "type": "string" },
+          "lines": { "type": "string" },
+          "symbol": { "type": "string" }
+        }
+      }
+    },
+    "root_cause": { "type": "string" },
+    "attack_path": { "type": "string" },
+    "chained_with": { "type": "array", "items": { "type": "string" } },
+    "business_impact": {
+      "type": "object",
+      "properties": {
+        "financial": { "type": "string" },
+        "data_privacy": { "type": "string" },
+        "reputational": { "type": "string" },
+        "operational": { "type": "string" },
+        "ip": { "type": "string" },
+        "compliance": { "type": "string" },
+        "attacker_motivation": { "type": "string" },
+        "exposure_band": { "enum": ["catastrophic", "large", "medium", "low"] }
+      }
+    },
+    "reliability_runs": { "type": "integer", "minimum": 0 },
+    "determinism": { "enum": ["Deterministic", "Intermittent", "Environment-dependent", "Static-only"] },
+    "poc": { "type": "string" },
+    "fix_immediate": { "type": "string" },
+    "fix_longterm": { "type": "string" },
+    "remediation_effort": { "enum": ["low", "medium", "high"] },
+    "related_reports": { "type": "array", "items": { "type": "string" } },
+    "novelty": { "enum": ["Novel", "Variant of known", "Likely duplicate", "Unverified"] }
+  }
+}
